@@ -1,6 +1,6 @@
 {
   "name": "@mrnaif/vue-tel-input-vuetify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "International Telephone Input with Vuetify",
   "author": "Yoga Kurniawan <yogaygk@gmail.com>",
   "license": "MIT",
@@ -18,7 +18,8 @@
     "build:es": "rollup --config build/rollup.config.es.js",
     "build:umd": "rollup --config build/rollup.config.umd.js",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "pub": "yarn build && yarn publish"
   },
   "husky": {
     "hooks": {
