@@ -30,6 +30,7 @@
       :autocomplete="autocomplete"
       :id="inputId"
       :maxlength="maxLen"
+      :rules="rules"
       :tabindex="inputOptions && inputOptions.tabindex ? inputOptions.tabindex : 0"
       @input="onInput"
       @blur="onBlur"
@@ -61,6 +62,10 @@ export default {
     placeholder: {
       type: String,
       default: () => getDefault('placeholder'),
+    },
+    rules: {
+      type: Array,
+      default: () => getDefault('rules'),
     },
     disabledFetchingCountry: {
       type: Boolean,
