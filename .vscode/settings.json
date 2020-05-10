@@ -12,9 +12,7 @@
     "tabindex",
     "typeof"
   ],
-  "editor.formatOnSave": false,
   "javascript.format.enable": false,
-  "eslint.autoFixOnSave": true,
   "eslint.alwaysShowStatus": true,
   "eslint.options": {
     "extensions": [
@@ -24,22 +22,8 @@
       ".jsx"
     ]
   },
-  "eslint.validate": [
-    {
-      "language": "html",
-      "autoFix": true
-    },
-    {
-      "language": "vue",
-      "autoFix": true
-    },
-    {
-      "language": "javascript",
-      "autoFix": true
-    },
-    {
-      "language": "javascriptreact",
-      "autoFix": true
-    }
-  ]
+  "eslint.validate": ["html", "vue", "javascript", "javascriptreact"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

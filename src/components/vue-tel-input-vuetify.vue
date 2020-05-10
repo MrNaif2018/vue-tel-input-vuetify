@@ -12,7 +12,7 @@
         <template slot="selection">
           <div :class="activeCountry.iso2.toLowerCase()" class="vti__flag" />
         </template>
-        <template slot="item" scope="data">
+        <template slot="item" slot-scope="data">
           <div :class="data.item.iso2.toLowerCase()" class="vti__flag" />
           {{ data.item.name }} {{ `+${data.item.dialCode}` }}
         </template>
@@ -40,9 +40,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import PhoneNumber from 'awesome-phonenumber';
-import { VSelect, VTextField } from 'vuetify/lib';
 import utils, { getCountry, setCaretPosition } from '../utils';
 
 function getDefault(key) {
@@ -53,60 +51,8 @@ function getDefault(key) {
   return value;
 }
 
-// Polyfill for Event.path in IE 11: https://stackoverflow.com/a/46093727
-function getParents(node, memo) {
-  const parsedMemo = memo || [];
-  const { parentNode } = node;
-  if (!parentNode) {
-    return parsedMemo;
-  }
-  return getParents(parentNode, parsedMemo.concat(parentNode));
-}
-
 export default {
-  name: 'VueTelInputVuetify',
-  components: {
-    VSelect,
-    VTextField,
-  },
-  directives: {
-    // Click-outside by BosNaufal: https://github.com/BosNaufal/vue-click-outside
-    'click-outside': {
-      bind(el, binding, vNode) {
-        // Provided expression must evaluate to a function.
-        if (typeof binding.value !== 'function') {
-          const compName = vNode.context.name;
-          let warn = `[Vue-click-outside:] provided expression ${binding.expression} is not a function, but has to be`;
-          if (compName) {
-            warn += `Found in component ${compName}`;
-          }
-          console.warn(warn);
-        }
-        // Define Handler and cache it on the element
-        const { bubble } = binding.modifiers;
-        const handler = (e) => {
-          // Fall back to composedPath if e.path is undefined
-          const path = e.path
-            || (e.composedPath ? e.composedPath() : false)
-            || getParents(e.target);
-          if (
-            bubble
-            || (path.length && !el.contains(path[0]) && el !== path[0])
-          ) {
-            binding.value(e);
-          }
-        };
-        el.__vueClickOutside__ = handler;
-        // add Event Listeners
-        document.addEventListener('click', handler);
-      },
-      unbind(el) {
-        // Remove Event Listeners
-        document.removeEventListener('click', el.__vueClickOutside__);
-        el.__vueClickOutside__ = null;
-      },
-    },
-  },
+  name: 'vue-tel-input-vuetify',
   props: {
     value: {
       type: String,
@@ -244,9 +190,7 @@ export default {
     },
     parsedMode() {
       if (this.mode) {
-        if (!['international', 'national'].includes(this.mode)) {
-          console.error('Invalid value of prop "mode"');
-        } else {
+        if (['international', 'national'].includes(this.mode)) {
           return this.mode;
         }
       }
@@ -352,7 +296,6 @@ export default {
         this.$emit('validate', this.phoneObject);
         this.$emit('onValidate', this.phoneObject); // Deprecated
       })
-      .catch(console.error)
       .finally(() => {
         this.finishMounted = true;
       });
@@ -396,10 +339,8 @@ export default {
           getCountry()
             .then((res) => {
               this.activeCountry = this.findCountry(res) || this.activeCountry;
-              console.log(this.activeCountry);
             })
-            .catch((error) => {
-              console.warn(error);
+            .catch(() => {
               /**
                * 4. Use the first country from preferred list (if available) or all countries list
                */
@@ -511,9 +452,6 @@ export default {
       }
       this.open = !this.open;
     },
-    clickedOutside() {
-      this.open = false;
-    },
     keyboardNav(e) {
       if (e.keyCode === 40) {
         // down arrow
@@ -592,7 +530,7 @@ export default {
 </script>
 
 <style src="../assets/sprite.css"></style>
-<style lang="scss" scoped>
+<style scoped>
 .custom-tel-input {
   display: flex;
   align-items: center;

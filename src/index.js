@@ -1,38 +1,12 @@
-import utils, { defaultOptions } from "./utils";
-import VueTelInputVuetify from "./components/vue-tel-input-vuetify.vue";
+import utils, { defaultOptions } from './utils';
+import VueTelInputVuetify from './components/vue-tel-input-vuetify.vue';
 
-export function install(Vue, customOptions = {}) {
-  if (install.installed) return;
-  if (!customOptions || !customOptions.vuetify) {
-    return;
-  }
-  const { vuetify: vuetifyFramework } = customOptions;
-  install.installed = true;
-  install.vuetify = vuetifyFramework;
+const install = (Vue, customOptions = {}) => {
   utils.options = {
     ...defaultOptions,
-    ...customOptions
+    ...customOptions,
   };
-  console.log(vuetifyFramework);
-  Vue.use(vuetifyFramework);
-  Vue.component("vue-tel-input-vuetify", VueTelInputVuetify);
-}
-
-export { VueTelInputVuetify };
-
-const plugin = {
-  install
+  Vue.component('vue-tel-input-vuetify', VueTelInputVuetify);
 };
 
-// Auto-install
-let GlobalVue = null;
-if (typeof window !== "undefined") {
-  GlobalVue = window.Vue;
-} else if (typeof global !== "undefined") {
-  GlobalVue = global.Vue;
-}
-if (GlobalVue) {
-  GlobalVue.use(plugin);
-}
-
-export default plugin;
+export default install;
