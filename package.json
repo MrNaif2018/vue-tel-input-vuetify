@@ -1,6 +1,6 @@
 {
-  "name": "vue-tel-input-vuetify",
-  "version": "1.1.0",
+  "name": "@mrnaif/vue-tel-input-vuetify",
+  "version": "1.0.1",
   "description": "International Telephone Input with Vuetify",
   "author": "Yoga Kurniawan <yogaygk@gmail.com>",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "commit": "git-cz",
     "dev": "vue-cli-service serve",
     "demo": "vue-cli-service build",
-    "build": "set NODE_ENV=production && npm run build:browser && npm run build:es && npm run build:umd",
+    "build": "set NODE_ENV=production && yarn build:browser && yarn build:es && yarn build:umd",
     "build:browser": "rollup --config build/rollup.config.browser.js",
     "build:es": "rollup --config build/rollup.config.es.js",
     "build:umd": "rollup --config build/rollup.config.umd.js",
